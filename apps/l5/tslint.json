@@ -1,0 +1,20 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "l5FrameworkWebangular9",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "l5-framework-webangular9",
+      "kebab-case"
+    ]
+  },
+  "linterOptions": {
+    "exclude": ["!**/*"]
+  }
+}

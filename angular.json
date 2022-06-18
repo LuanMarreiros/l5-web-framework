@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "projects": {
+    "l5": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/l5",
+      "sourceRoot": "apps/l5/src",
+      "prefix": "l5-framework-webangular9",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/l5",
+            "index": "apps/l5/src/index.html",
+            "main": "apps/l5/src/main.ts",
+            "polyfills": "apps/l5/src/polyfills.ts",
+            "tsConfig": "apps/l5/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/l5/src/favicon.ico", "apps/l5/src/assets"],
+            "styles": ["apps/l5/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/l5/src/environments/environment.ts",
+                  "with": "apps/l5/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "l5:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "l5:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "l5:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/l5/tsconfig.app.json",
+              "apps/l5/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/l5/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/l5/jest.config.js",
+            "tsConfig": "apps/l5/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/l5/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "l5-e2e": {
+      "root": "apps/l5-e2e",
+      "sourceRoot": "apps/l5-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/l5-e2e/cypress.json",
+            "tsConfig": "apps/l5-e2e/tsconfig.e2e.json",
+            "devServerTarget": "l5:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "l5:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/l5-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/l5-e2e/**/*"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "l5"
+}
